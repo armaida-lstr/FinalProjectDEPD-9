@@ -17,6 +17,47 @@ class HomePage extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: 0)).then((_) {
+      showModalBottomSheet<void>(
+          context: context,
+          builder: (BuildContext context) {
+            return SizedBox(
+              height: 400,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    const Text('GUIDE DEPD9 TO-DO LIST APPS'),
+                    const Text(''),
+                    const Text(
+                        '1. Buat Group Untuk Mengkategorikan Task/Jadwal'),
+                    const Text('2. Pilih Group Kemudian Buat Task'),
+                    const Text(
+                        '3. Task Akan Dibuat Berdasarkan Tanggal Sekarang'),
+                    const Text('4. Klik Checkbox Jika Task Terselesaikan'),
+                    const Text(
+                        '5. Geser Kekiri Untuk Menghapus Task Yang Telah Selesai'),
+                    const Text(
+                        '6. Klik Refresh Untuk Menghapus Task Yang Tidak Sesuai Tanggal Sekarang'),
+                    const Text(
+                        '7. Jika Ingin Mengetahui report Task perbulan Maka Jangan Klik Refresh Dari Hari Pertama Input Task'),
+                    const Text(
+                        '8. Report Task Untuk Mengetahui Seberapa Efisien Task yang Berhasil Kita Selesaikan'),
+                    const Text(
+                        '9. Efisiensi Dihitung Dari Seberapa Banyak Task Yang Terselesaikan'),
+                    const Text(''),
+                    ElevatedButton(
+                      child: const Text('GET STARTED'),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          });
+    });
+
     return Scaffold(
       body: Obx(
         () => IndexedStack(
@@ -73,20 +114,35 @@ class HomePage extends GetView<HomeController> {
           ],
         ),
       ),
+      // floatingActionButton: DragTarget<Task>(
+      //   builder: (_, __, ___) {
+
+      //     return Obx(
+      //       () => FloatingActionButton(
+      //         backgroundColor: controller.deleting.value ? Colors.red : blue,
+      //         onPressed: () {
+      //           if (controller.tasks.isNotEmpty) {
+      //             Get.to(() => AddDialog(), transition: Transition.downToUp);
+      //           } else {
+      //             EasyLoading.showInfo('Please create your task type');
+      //           }
+      //         },
+      //         child: Icon(controller.deleting.value ? Icons.delete : Icons.add),
+      //       ),
+      //     );
+      //   },
+      //   onAccept: (task) {
+      //     controller.deleteTask(task);
+      //     EasyLoading.showSuccess('Delete Sucess');
+      //   },
+      // ),
+
       floatingActionButton: DragTarget<Task>(
         builder: (_, __, ___) {
+          backgroundColor:
+          controller.deleting.value ? Colors.red : blue;
           return Obx(
-            () => FloatingActionButton(
-              backgroundColor: controller.deleting.value ? Colors.red : blue,
-              onPressed: () {
-                if (controller.tasks.isNotEmpty) {
-                  Get.to(() => AddDialog(), transition: Transition.downToUp);
-                } else {
-                  EasyLoading.showInfo('Please create your task type');
-                }
-              },
-              child: Icon(controller.deleting.value ? Icons.delete : Icons.add),
-            ),
+            () => Icon(controller.deleting.value ? Icons.delete : Icons.delete),
           );
         },
         onAccept: (task) {
@@ -94,6 +150,7 @@ class HomePage extends GetView<HomeController> {
           EasyLoading.showSuccess('Delete Sucess');
         },
       ),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Theme(
         data: ThemeData(
